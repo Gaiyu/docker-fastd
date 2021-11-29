@@ -1,0 +1,23 @@
+#!/bin/sh
+BIND='0.0.0.0:7000'
+[ ! -z "$1" ] && BIND="$1"
+INTERFACE='tap0'
+METHOD='salsa2012+umac'
+MTU='1426'
+KEYS=$(fastd --generate-key 2> dev/null | awk '{print $2}')
+SECRET=$(echo $KEYS | awk '{print $1}')
+PUBLIC=$(echo $KEYS | awk '{print $2}')
+
+cat << EOF > /config.conf
+include peers from "/peers";
+interface "${INTERFACE}";
+method "${METHOD}";
+mtu ${MTU};
+secret "${SECRET}";
+bind ${BIND};
+EOF
+
+cat << EOF > /mine.peer.conf
+key "${PUBLIC}";
+remote __IP__:__PORT__
+EOF

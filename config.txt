@@ -1,0 +1,6 @@
+interface "tap0";
+method "salsa2012+umac";
+bind 0.0.0.0:10000;
+secret "78dfb05fe0aa586fb017de566b0d21398ac64032fcf1c765855f4d538cc5a357";
+mtu 1426;
+include peers from "peers";

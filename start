@@ -1,0 +1,8 @@
+#!/bin/sh
+WAN_NAME='eth0'
+echo 1 > /proc/sys/net/ipv4/ip_forward
+iptables -t nat -I POSTROUTING -o ${WAN_NAME} -j MASQUERADE
+while [ 1 ]
+do
+	sleep 10
+done
